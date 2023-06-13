@@ -4,14 +4,14 @@ import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
-import com.example.wallnoire.localData.model.PreviewPhoto
+import com.example.wallnoire.model.domain.Data
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.pow
 import kotlin.math.withSign
 
 object BlurHashDecoder {
-    fun blurHashBitmap(resources: Resources, attachment:  PreviewPhoto?): BitmapDrawable {
+    fun blurHashBitmap(resources: Resources, attachment:  Data?): BitmapDrawable {
         return BitmapDrawable(
             resources,
             decode(
@@ -21,7 +21,7 @@ object BlurHashDecoder {
         )
     }
 
-    private fun decode(blurHash: String?, width: Int? = 30, height: Int? = 60, punch: Float = 1f): Bitmap? {
+    fun decode(blurHash: String?, width: Int? = 30, height: Int? = 60, punch: Float = 1f): Bitmap? {
         if (blurHash == null || width == null || height == null || blurHash.length < 6) {
             return null
         }

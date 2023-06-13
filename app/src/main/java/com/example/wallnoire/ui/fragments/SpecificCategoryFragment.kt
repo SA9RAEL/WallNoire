@@ -8,21 +8,17 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
-import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
-import androidx.paging.CombinedLoadStates
-import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.depapel.R
 import com.example.depapel.databinding.FragmentSpecificCategoryBinding
 import com.example.wallnoire.WallApplication
-import com.example.wallnoire.localData.model.PreviewPhoto
+import com.example.wallnoire.model.domain.Data
 import com.example.wallnoire.recyclerview.RecyclerViewAdapter
 import com.example.wallnoire.recyclerview.WallInteractionListener
 import com.example.wallnoire.ui.fragments.base.BaseFragment
@@ -96,37 +92,11 @@ class SpecificCategoryFragment : BaseFragment(R.layout.fragment_specific_categor
     private fun recyclerAdapter() {
         val layoutManager = GridLayoutManager(context, 3)
         binding.wallCategoryRecyclerView.layoutManager = layoutManager
-        binding.wallCategoryRecyclerView.adapter =
-            recyclerViewAdapter
-
-
-        recyclerViewAdapter.addLoadStateListener { loadState ->
-            binding.wallCategoryRecyclerView.isVisible =
-                loadState.source.refresh is LoadState.NotLoading
-            binding.wallCategoryRecyclerView.isVisible =
-                loadState.source.refresh is LoadState.Loading
-            binding.wallCategoryRecyclerView.isVisible =
-                loadState.source.refresh is LoadState.Error
-            handelError(loadState)
-        }
-        binding.wallCategoryRecyclerView.setOnClickListener {
-            recyclerViewAdapter.retry()
-        }
-
+        binding.wallCategoryRecyclerView.adapter = recyclerViewAdapter
     }
 
-    private fun handelError(loadStates: CombinedLoadStates) {
-        val errorState = loadStates.source.append as? LoadState.Error
-            ?: loadStates.source.prepend as? LoadState.Error
-
-        errorState?.let {
-            Toast.makeText(context, "try again later", Toast.LENGTH_LONG).show()
-        }
-    }
-
-
-    override fun onClickItem(data: PreviewPhoto, view: View) {
-        val imageData = arrayOf(data.urls, data.blurHash.toString())
+    override fun onClickItem(data: Data, view: View) {
+        val imageData = arrayOf(data.fullImageUrl.toString(), data.blurHash.toString())
         Navigation.findNavController(view)
             .navigate(
                 SpecificCategoryFragmentDirections.actionSpecificCategoryFragmentToDownloadFragment(
@@ -135,16 +105,15 @@ class SpecificCategoryFragment : BaseFragment(R.layout.fragment_specific_categor
             )
     }
 
+    private fun categoryName() {
+        binding.categoryName.text = args.categoryName
+    }
+
     private fun callBack() {
         binding.categoryName.onRightDrawableClicked {
             Navigation.findNavController(it).popBackStack()
         }
     }
-
-    private fun categoryName() {
-        binding.categoryName.text = args.categoryName
-    }
-
     @SuppressLint("ClickableViewAccessibility")
     private fun TextView.onRightDrawableClicked(onClicked: (view: TextView) -> Unit) {
         this.setOnTouchListener { v, event ->

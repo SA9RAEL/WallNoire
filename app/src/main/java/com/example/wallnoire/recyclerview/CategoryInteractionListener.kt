@@ -1,8 +1,8 @@
 package com.example.wallnoire.recyclerview
 
 import android.view.View
-import com.example.wallnoire.localData.model.TopicItem
+import com.example.wallnoire.model.domain.Category
 
 interface CategoryInteractionListener {
-    fun onClickCategory(topicItem: TopicItem, view: View)
+    fun onClickCategory(category: Category, view: View)
 }

@@ -7,10 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.depapel.R
 import com.example.depapel.databinding.CategoryRowBinding
-import com.example.wallnoire.localData.model.TopicItem
+import com.example.wallnoire.model.domain.Category
 
 class CategoriesAdapter(
-    private val topicItem: List<TopicItem>,
+    private val topicItem: List<Category>,
     private val listener: CategoryInteractionListener
 ) :
     RecyclerView.Adapter<CategoriesAdapter.CategoryViewHolder>() {
@@ -28,7 +28,7 @@ class CategoriesAdapter(
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
         val currentCategory = topicItem[position]
         holder.binding.apply {
-            categoryTextView.text = currentCategory.title
+            categoryTextView.text = currentCategory.categoryName
 
             Glide.with(holder.itemView.context)
                 .load(currentCategory.imageUrl)

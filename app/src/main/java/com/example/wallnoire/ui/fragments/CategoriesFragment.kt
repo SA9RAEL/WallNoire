@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.depapel.R
 import com.example.depapel.databinding.FragmentCategoriesBinding
 import com.example.wallnoire.WallApplication
-import com.example.wallnoire.localData.model.TopicItem
+import com.example.wallnoire.model.domain.Category
 import com.example.wallnoire.recyclerview.CategoriesAdapter
 import com.example.wallnoire.recyclerview.CategoryInteractionListener
 import com.example.wallnoire.ui.fragments.base.BaseFragment
@@ -45,9 +45,9 @@ class CategoriesFragment : BaseFragment(R.layout.fragment_categories), CategoryI
         binding.categoriesRecyclerView.adapter = recyclerViewAdapter
     }
 
-    override fun onClickCategory(topicItem: TopicItem, view: View) {
+    override fun onClickCategory(category: Category, view: View) {
         val action =
-            CategoriesFragmentDirections.actionCategoriesFragmentToSpecificCategoryFragment(topicItem.title)
+            CategoriesFragmentDirections.actionCategoriesFragmentToSpecificCategoryFragment(category.categoryName)
         Navigation.findNavController(view).navigate(action)
     }
 }

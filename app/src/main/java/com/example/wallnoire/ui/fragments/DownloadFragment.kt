@@ -1,60 +1,61 @@
 package com.example.wallnoire.ui.fragments
 
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.graphics.drawable.toDrawable
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
 import com.example.depapel.R
+import com.example.depapel.databinding.FragmentDownloadBinding
+import com.example.wallnoire.utils.BlurHashDecoder
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [DownloadFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class DownloadFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    private lateinit var binding: FragmentDownloadBinding
+    private val args: DownloadFragmentArgs by navArgs()
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentDownloadBinding.inflate(inflater, container, false)
+        loadWall(args.imageData[0])
+        bottomSheet()
+        addCallBacks()
+        return binding.root
+    }
+
+    private fun loadWall(url: String) {
+        val blurHashDrawable = BlurHashDecoder.decode(args.imageData[1])
+        Glide.with(this)
+            .load(url)
+            .centerCrop()
+            .placeholder(blurHashDrawable?.toDrawable(this.resources))
+            .error(blurHashDrawable)
+            .into(binding.downloadImageView)
+
+        binding.constraintDownload.background = BitmapDrawable(this.resources, blurHashDrawable)
+    }
+
+    private fun addCallBacks() {
+        binding.backButton.setOnClickListener {v->
+            Navigation.findNavController(v).popBackStack()
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_download, container, false)
+    private fun bottomSheet() {
+        val bottomSheetFragment = BottomSheetFragment(args.imageData[0])
+        binding.downloadButton.setOnClickListener {
+            bottomSheetFragment.show(requireActivity().supportFragmentManager, "bottomSheetDialog")
+        }
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ImageFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            DownloadFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
 }

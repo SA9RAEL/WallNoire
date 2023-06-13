@@ -4,4 +4,12 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="categories">Categories</string>
     <string name="retry">RETRY\n</string>
+    <string name="back_button">backButton</string>
+    <string name="download_image">Download</string>
+    <string name="set_as_background">Set as background</string>
+    <string name="set_as_lockscreen">Set as lockscreen</string>
+    <string name="photo_downloading">Photo is downloading...</string>
+    <string name="error_unknown">We are unable to complete your request now. Please try again later!\n</string>
+    <string name="download_success">Download is successful.</string>
+    <string name="downloaded">Downloaded %s</string>
 </resources>
