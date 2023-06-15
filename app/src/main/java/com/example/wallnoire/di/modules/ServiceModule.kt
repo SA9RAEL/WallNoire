@@ -6,6 +6,6 @@ import dagger.android.ContributesAndroidInjector
 
 @Module
 interface ServiceModule {
-    @get:ContributesAndroidInjector
-    val contributesPhotoDownloadService: PhotoDownloadService
+    @ContributesAndroidInjector
+    fun contributesPhotoDownloadService(): PhotoDownloadService
 }

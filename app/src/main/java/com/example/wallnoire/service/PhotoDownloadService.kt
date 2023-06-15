@@ -7,26 +7,22 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Environment
-import android.os.Message
 import android.provider.MediaStore
-import android.sax.RootElement
 import androidx.core.app.NotificationCompat
-import com.example.depapel.R
+import com.example.wallnoire.R
 import com.example.wallnoire.domain.usecase.PhotoDownloadUseCase
 import com.example.wallnoire.utils.Resource
 import com.example.wallnoire.utils.SingleMediaScanner
 import dagger.android.DaggerIntentService
-import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import okhttp3.ResponseBody
-import okhttp3.internal.notify
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
 import java.io.OutputStream
-import java.util.UUID
+import java.util.*
 import javax.inject.Inject
 
 class PhotoDownloadService : DaggerIntentService("PhotoDownloadService") {
@@ -66,7 +62,6 @@ class PhotoDownloadService : DaggerIntentService("PhotoDownloadService") {
 
     }
 
-    @OptIn(DelicateCoroutinesApi::class)
     private fun startDownload(imageUrl: String) {
         if (imageUrl.isNotEmpty()) {
             useCase.downloadImage(imageUrl).onEach {
@@ -74,15 +69,12 @@ class PhotoDownloadService : DaggerIntentService("PhotoDownloadService") {
                     is Resource.Loading -> {
                         notificationManager.notify(0, notificationBuilder.build())
                     }
-
                     is Resource.Success -> {
                         writeResponseOnOutputStream(it.data)
                     }
-
                     is Resource.Error -> {
                         onDownloadComplete(getString(R.string.error_unknown))
                     }
-
                     else -> {}
                 }
             }.launchIn(GlobalScope)
@@ -93,7 +85,7 @@ class PhotoDownloadService : DaggerIntentService("PhotoDownloadService") {
         try {
             var readingData: Int
             val fileReader = ByteArray(1024 * 4)
-            var fileSize = body.contentLength()
+            val fileSize = body.contentLength()
             val inputStream: InputStream = body.byteStream()
             val outputStream = getOutputStream()
             var downloadedData: Long = 0

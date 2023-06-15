@@ -1,46 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph"
-    app:startDestination="@id/categoriesFragment">
+    android:id="@+id/home_nav_graph"
+    app:startDestination="@id/photosFragment">
 
     <fragment
-        android:id="@+id/categoriesFragment"
-        android:name="com.example.wallnoire.ui.fragments.CategoriesFragment"
-        android:label="fragment_categories"
-        tools:layout="@layout/fragment_categories" >
+        android:id="@+id/photosFragment"
+        android:name="com.example.wallnoire.presentation.photos.PhotosFragment"
+        android:label="PhotosFragment">
         <action
-            android:id="@+id/action_categoriesFragment_to_specificCategoryFragment"
-            app:destination="@id/specificCategoryFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/specificCategoryFragment"
-        android:name="com.example.wallnoire.ui.fragments.SpecificCategoryFragment"
-        android:label="fragment_specific_category"
-        tools:layout="@layout/fragment_specific_category" >
+            android:id="@+id/action_photosFragment_to_photoDetailFragment"
+            app:destination="@id/photoDetailFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
-            android:id="@+id/action_specificCategoryFragment_to_downloadFragment"
-            app:destination="@id/downloadFragment"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out"
-            app:popEnterAnim="@android:anim/fade_in"
-            app:popExitAnim="@android:anim/fade_out"
-            />
-        <argument
-            android:name="categoryName"
-            app:argType="string"
-            />
+            android:id="@+id/action_photosFragment_to_favoriteFragment"
+            app:destination="@id/favoriteFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
-        android:id="@+id/downloadFragment"
-        android:name="com.example.wallnoire.ui.fragments.DownloadFragment"
-        android:label="fragment_download"
-        tools:layout="@layout/fragment_download" >
+        android:id="@+id/photoDetailFragment"
+        android:name="com.example.wallnoire.presentation.detail.PhotoDetailFragment"
+        android:label="PhotoDetailFragment">
         <argument
-            android:name="imageData"
-            app:argType="string[]"/>
-
+            android:name="photoId"
+            app:argType="string" />
     </fragment>
-
+    <fragment
+        android:id="@+id/favoriteFragment"
+        android:name="com.example.wallnoire.presentation.favorite.FavoriteFragment"
+        android:label="FavoriteFragment">
+        <action
+            android:id="@+id/action_favoriteFragment_to_photoDetailFragment"
+            app:destination="@id/photoDetailFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
 </navigation>

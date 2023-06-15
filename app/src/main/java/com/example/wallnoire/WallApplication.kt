@@ -1,15 +1,13 @@
 package com.example.wallnoire
 
-import android.app.Application
-import com.example.wallnoire.di.AppComponent
+import androidx.viewbinding.BuildConfig
 import com.example.wallnoire.di.DaggerAppComponent
+import dagger.android.AndroidInjector
+import dagger.android.support.DaggerApplication
 
-class WallApplication : Application() {
+class WallApplication : DaggerApplication() {
 
-    lateinit var appComponent: AppComponent
+    override fun applicationInjector(): AndroidInjector<out DaggerApplication> =
+       DaggerAppComponent.factory().create(this)
 
-    override fun onCreate() {
-        super.onCreate()
-        appComponent = DaggerAppComponent.builder().withContext(this).build()
-    }
 }

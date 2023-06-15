@@ -4,6 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.wallnoire.di.ViewModelFactory
 import com.example.wallnoire.di.ViewModelKey
+import com.example.wallnoire.presentation.detail.PhotoDetailViewModel
+import com.example.wallnoire.presentation.favorite.FavoriteViewModel
+import com.example.wallnoire.presentation.photos.PhotosViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -11,19 +14,19 @@ import dagger.multibindings.IntoMap
 @Module
 interface ViewModelModule {
     @Binds
-    val ViewModelFactory.viewModelFactory: ViewModelProvider.Factory
+    fun ViewModelFactory.viewModelFactory(): ViewModelProvider.Factory
 
     @Binds
     @[IntoMap ViewModelKey(PhotosViewModel::class)]
-    val PhotosViewModel.bindsPhotosViewModel: ViewModel
+    fun PhotosViewModel.bindsPhotosViewModel(): ViewModel
 
 
     @Binds
     @[IntoMap ViewModelKey(PhotoDetailViewModel::class)]
-    val PhotoDetailViewModel.bidsPhotoDetailViewModel: ViewModel
+    fun PhotoDetailViewModel.bidsPhotoDetailViewModel(): ViewModel
 
 
     @Binds
     @[IntoMap ViewModelKey(FavoriteViewModel::class)]
-    val FavoriteViewModel.bidsFavoriteViewModel: ViewModel
+    fun FavoriteViewModel.bidsFavoriteViewModel(): ViewModel
 }

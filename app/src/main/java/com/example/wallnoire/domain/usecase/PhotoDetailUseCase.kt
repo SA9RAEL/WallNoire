@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
 
-
 @Singleton
 class PhotoDetailUseCase @Inject constructor(
     private val remoteRepository: RemoteRepository,

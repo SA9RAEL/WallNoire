@@ -12,5 +12,4 @@ class CategoryUseCase @Inject constructor(
     private val localRepository: LocalRepository
 ) {
     fun getCategories(): ArrayList<Category> = localRepository.getCategories()
-    
 }

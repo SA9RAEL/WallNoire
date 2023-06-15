@@ -10,7 +10,6 @@ import retrofit2.http.Streaming
 import retrofit2.http.Url
 
 interface WallApiService {
-
     @GET("search/photos")
     suspend fun getPhotosByQuery(
         @Query("query") query: String,

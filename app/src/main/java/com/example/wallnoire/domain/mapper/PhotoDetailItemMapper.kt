@@ -1,10 +1,10 @@
 package com.example.wallnoire.domain.mapper
 
+import com.example.wallnoire.base.extention.orEmpty
 import com.example.wallnoire.data.remote.model.Photo
 import com.example.wallnoire.data.viewitem.PhotoDetailViewItem
 import javax.inject.Inject
 import javax.inject.Singleton
-
 
 @Singleton
 class PhotoDetailItemMapper @Inject constructor() : Mapper<Photo, PhotoDetailViewItem> {
@@ -22,4 +22,6 @@ class PhotoDetailItemMapper @Inject constructor() : Mapper<Photo, PhotoDetailVie
             thumbImageUrl = item.urls?.thumb.orEmpty()
         )
     }
+
 }
+

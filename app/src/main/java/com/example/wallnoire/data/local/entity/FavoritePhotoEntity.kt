@@ -6,8 +6,9 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "fav_photos")
 data class FavoritePhotoEntity(
-    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "code") val code: Int = 0,
-    @ColumnInfo (name = "id") val id: String,
-    @ColumnInfo (name = "image_url") val imageUrl: String
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "code") var code: Int = 0,
+    @ColumnInfo(name = "id") val id: String,
+    @ColumnInfo(name = "image_url") val imageUrl: String
 
 )

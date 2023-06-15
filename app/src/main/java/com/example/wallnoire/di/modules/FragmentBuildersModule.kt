@@ -1,8 +1,8 @@
 package com.example.wallnoire.di.modules
 
-import barissaglam.client.wallpaperapp.presentation.detail.PhotoDetailFragment
-import barissaglam.client.wallpaperapp.presentation.favorite.FavoriteFragment
-import barissaglam.client.wallpaperapp.presentation.photos.PhotosFragment
+import com.example.wallnoire.presentation.detail.PhotoDetailFragment
+import com.example.wallnoire.presentation.favorite.FavoriteFragment
+import com.example.wallnoire.presentation.photos.PhotosFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 

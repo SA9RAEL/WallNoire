@@ -1,10 +1,9 @@
 package com.example.wallnoire.di.modules
 
 import android.content.Context
-import com.example.depapel.BuildConfig
-import com.example.wallnoire.di.BASE_URL
+import com.example.wallnoire.BuildConfig
+import com.example.wallnoire.base.di.ApiInterceptor
 import com.example.wallnoire.network.WallApiService
-import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
@@ -16,9 +15,7 @@ import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.lang.reflect.Type
-import java.util.Date
 import java.util.concurrent.TimeUnit
-import javax.inject.Singleton
 
 
 @Module
@@ -32,13 +29,18 @@ class NetworkModule {
 
     @Provides
     @Reusable
-    fun provideHttpClient(context: Context): OkHttpClient {
+    fun provideHttpClient(
+        httpLoggingInterceptor: HttpLoggingInterceptor,
+        context: Context,
+        interceptor: ApiInterceptor
+    ): OkHttpClient {
         val cacheSize = (10 * 1024 * 1024).toLong()
 
         return OkHttpClient.Builder()
             .addInterceptor(
-                httpLoggingInterceptor()
+                httpLoggingInterceptor
             )
+            .addInterceptor(interceptor)
             .readTimeout(15.toLong(), TimeUnit.SECONDS)
             .connectTimeout(15.toLong(), TimeUnit.SECONDS)
             .cache(Cache(context.cacheDir, cacheSize))
@@ -47,11 +49,9 @@ class NetworkModule {
 
     @Provides
     @Reusable
-    fun provideRetrofit(context: Context): WallApiService = Retrofit.Builder()
+    fun provideRetrofit(httpClient: OkHttpClient): WallApiService = Retrofit.Builder()
         .baseUrl(BuildConfig.API_URL)
-        .client(
-            provideHttpClient(context)
-        )
+        .client(httpClient)
         .addConverterFactory(nullOnEmptyConverterFactory)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
