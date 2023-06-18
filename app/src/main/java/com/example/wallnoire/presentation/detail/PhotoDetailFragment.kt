@@ -40,6 +40,20 @@ class PhotoDetailFragment : BaseFragment<FragmentPhotoDetailBinding, PhotoDetail
         viewModel.getPhotoDetail()
     }
 
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        if (requestCode == PermissionManager.RC_WRITE_EXTERNAL_STORAGE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                startDownloadService()
+            } else {
+                showSnackBar(message = getString(R.string.error_no_permission), type = ERROR)
+            }
+        }
+    }
+
     override fun setupClickListeners() {
         with(binding) {
             imageButtonClose.setOnClickListener { findNavController().popBackStack() }
@@ -110,20 +124,6 @@ class PhotoDetailFragment : BaseFragment<FragmentPhotoDetailBinding, PhotoDetail
             dismissProgress()
         }.start()
     } else showSnackBar(message = getString(R.string.not_supported_set_wallpaper), type = ERROR)
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        if (requestCode == PermissionManager.RC_WRITE_EXTERNAL_STORAGE) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                startDownloadService()
-            } else {
-                showSnackBar(message = getString(R.string.error_no_permission), type = ERROR)
-            }
-        }
-    }
 
     companion object {
         private const val DOWNLOAD_SMALL = 0
