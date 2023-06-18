@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@Singleton
 class FavoriteUseCase @Inject constructor(
     private val localRepository: LocalRepository,
     private val itemMapper: FavoriteItemMapper

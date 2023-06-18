@@ -7,7 +7,6 @@ import okhttp3.ResponseBody
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@Singleton
 class PhotoDownloadUseCase @Inject constructor(
     private val remoteRepository: RemoteRepository
 ) {

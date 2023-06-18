@@ -7,7 +7,6 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 
-@Singleton
 class CategoryUseCase @Inject constructor(
     private val localRepository: LocalRepository
 ) {
