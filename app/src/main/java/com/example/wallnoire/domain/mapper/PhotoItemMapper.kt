@@ -6,6 +6,7 @@ import com.example.wallnoire.data.viewitem.PhotosViewItem
 import javax.inject.Inject
 import javax.inject.Singleton
 
+// тут
 @Singleton
 class PhotoItemMapper @Inject constructor() : Mapper<PhotosResponse, PhotosViewItem> {
     override fun mapFrom(item: PhotosResponse): PhotosViewItem {
