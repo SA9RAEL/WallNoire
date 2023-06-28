@@ -2,6 +2,7 @@ package com.example.wallnoire.data.remote.model
 
 import com.google.gson.annotations.SerializedName
 
+// Переиновать в UserResponseDto
 data class User(
     @SerializedName("id") val id: String?,
     @SerializedName("updated_at") val updatedAt: String?,

@@ -2,6 +2,7 @@ package com.example.wallnoire.data.remote.model
 
 import com.google.gson.annotations.SerializedName
 
+// Переименовать в PhotoResponseDto
 data class Photo(
     @SerializedName("id") val id: String?,
     @SerializedName("created_at") val createdAt: String?,
