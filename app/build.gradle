@@ -55,10 +55,14 @@ dependencies {
 
     /*Dagger*/
     implementation 'com.google.dagger:dagger:2.27'
+    kapt 'com.google.dagger:dagger-compiler:2.26'
+    // Все зависимость на dagger android необходимо удалить
+    // Как это сделать?
+    // Удаляешь зависимости и после этого делаешь так, чтобы все завилось
     implementation 'com.google.dagger:dagger-android:2.26'
     implementation 'com.google.dagger:dagger-android-support:2.26'
     kapt 'com.google.dagger:dagger-android-processor:2.26'
-    kapt 'com.google.dagger:dagger-compiler:2.26'
+
 
     //Http
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
