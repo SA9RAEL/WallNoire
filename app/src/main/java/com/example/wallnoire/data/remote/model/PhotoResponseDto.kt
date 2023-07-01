@@ -2,7 +2,7 @@ package com.example.wallnoire.data.remote.model
 
 import com.google.gson.annotations.SerializedName
 
-data class Photo(
+data class PhotoResponseDto(
     @SerializedName("id") val id: String?,
     @SerializedName("created_at") val createdAt: String?,
     @SerializedName("updated_at") val updatedAt: String?,
@@ -12,9 +12,9 @@ data class Photo(
     @SerializedName("color") val color: String?,
     @SerializedName("description") val description: String?,
     @SerializedName("alt_description") val alt_description: String?,
-    @SerializedName("urls") val urls: Url?,
-    @SerializedName("links") val links: Link?,
+    @SerializedName("urls") val urls: UrlResponseDto?,
+    @SerializedName("links") val links: LinkResponseDto?,
     @SerializedName("likes") val likes: Int?,
-    @SerializedName("user") val user: User?,
-    @SerializedName("tags") val tags: List<Tag>?
+    @SerializedName("user") val user: UserResponseDto?,
+    @SerializedName("tags") val tags: List<TagResponseDto>?
 )

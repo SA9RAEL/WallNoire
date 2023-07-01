@@ -1,7 +1,7 @@
 package com.example.wallnoire.network
 
-import com.example.wallnoire.data.remote.model.Photo
-import com.example.wallnoire.data.remote.model.response.PhotosResponse
+import com.example.wallnoire.data.remote.model.PhotoResponseDto
+import com.example.wallnoire.data.remote.model.response.PhotosResponseDto
 import okhttp3.ResponseBody
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -15,10 +15,10 @@ interface WallApiService {
         @Query("query") query: String,
         @Query("page") page: Int,
         @Query("per_page") perPage: Int = 30
-    ): PhotosResponse
+    ): PhotosResponseDto
 
     @GET("photos/{id}")
-    suspend fun getPhotoDetail(@Path("id") id: String): Photo
+    suspend fun getPhotoDetail(@Path("id") id: String): PhotoResponseDto
 
     @Streaming
     @GET

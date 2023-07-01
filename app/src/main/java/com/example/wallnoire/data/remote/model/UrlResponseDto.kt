@@ -2,7 +2,7 @@ package com.example.wallnoire.data.remote.model
 
 import com.google.gson.annotations.SerializedName
 
-data class Url(
+data class UrlResponseDto(
     @SerializedName("raw") val raw: String?,
     @SerializedName("full") val full: String?,
     @SerializedName("regular") val regular: String?,

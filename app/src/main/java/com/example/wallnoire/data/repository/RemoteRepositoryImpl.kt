@@ -1,7 +1,7 @@
 package com.example.wallnoire.data.repository
 
-import com.example.wallnoire.data.remote.model.Photo
-import com.example.wallnoire.data.remote.model.response.PhotosResponse
+import com.example.wallnoire.data.remote.model.PhotoResponseDto
+import com.example.wallnoire.data.remote.model.response.PhotosResponseDto
 import com.example.wallnoire.domain.repository.RemoteRepository
 import com.example.wallnoire.network.WallApiService
 import com.example.wallnoire.utils.Resource
@@ -14,12 +14,12 @@ import javax.inject.Singleton
 
 @Singleton
 class RemoteRepositoryImpl @Inject constructor(private val api: WallApiService) : RemoteRepository {
-    override fun getPhotosByQuery(query: String, page: Int): Flow<Resource<PhotosResponse>> = flow {
+    override fun getPhotosByQuery(query: String, page: Int): Flow<Resource<PhotosResponseDto>> = flow {
         val responseCall = api.getPhotosByQuery(query, page)
         emit(Resource.Success(responseCall))
     }.execute()
 
-    override fun getPhotoDetail(id: String): Flow<Resource<Photo>> = flow {
+    override fun getPhotoDetail(id: String): Flow<Resource<PhotoResponseDto>> = flow {
         val responseCall = api.getPhotoDetail(id)
         emit(Resource.Success(responseCall))
     }.execute()
