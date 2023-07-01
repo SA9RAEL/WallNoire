@@ -1,5 +1,6 @@
 package com.example.wallnoire.service
 
+import android.app.IntentService
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.ContentValues
@@ -10,10 +11,10 @@ import android.os.Environment
 import android.provider.MediaStore
 import androidx.core.app.NotificationCompat
 import com.example.wallnoire.R
+import com.example.wallnoire.base.extention.serviceComponent
 import com.example.wallnoire.domain.usecase.PhotoDownloadUseCase
 import com.example.wallnoire.utils.Resource
 import com.example.wallnoire.utils.SingleMediaScanner
-import dagger.android.DaggerIntentService
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -25,12 +26,17 @@ import java.io.OutputStream
 import java.util.*
 import javax.inject.Inject
 
-class PhotoDownloadService : DaggerIntentService("PhotoDownloadService") {
+class PhotoDownloadService : IntentService("PhotoDownloadService") {
     @Inject
     lateinit var useCase: PhotoDownloadUseCase
 
     private lateinit var notificationManager: NotificationManager
     private lateinit var notificationBuilder: NotificationCompat.Builder
+
+    override fun onCreate() {
+        this.serviceComponent().inject(this)
+        super.onCreate()
+    }
 
     override fun onHandleIntent(intent: Intent?) {
         intent?.extras?.let { bundle ->

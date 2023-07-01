@@ -1,37 +1,41 @@
 package com.example.wallnoire.di
 
 import android.content.Context
-import com.example.wallnoire.WallApplication
-import com.example.wallnoire.di.modules.ActivityModule
-import com.example.wallnoire.di.modules.FragmentBuildersModule
 import com.example.wallnoire.di.modules.LocalDataModule
 import com.example.wallnoire.di.modules.NetworkModule
-import com.example.wallnoire.di.modules.ServiceModule
 import com.example.wallnoire.di.modules.ViewModelModule
+import com.example.wallnoire.presentation.detail.PhotoDetailFragment
+import com.example.wallnoire.presentation.favorite.FavoriteFragment
+import com.example.wallnoire.presentation.home.HomeActivity
+import com.example.wallnoire.presentation.photos.PhotosFragment
+import com.example.wallnoire.presentation.splash.SplashActivity
+import com.example.wallnoire.service.PhotoDownloadService
 import dagger.BindsInstance
 import dagger.Component
-import dagger.android.AndroidInjectionModule
-import dagger.android.AndroidInjector
 import javax.inject.Singleton
-
 
 @Component(
     modules = [
-        AndroidInjectionModule::class,
-        ActivityModule::class,
-        FragmentBuildersModule::class,
         LocalDataModule::class,
         NetworkModule::class,
-        ServiceModule::class,
         ViewModelModule::class]
 )
 @Singleton
-interface AppComponent : AndroidInjector<WallApplication> {
+interface AppComponent {
 
-    @Component.Factory
-    interface Factory {
-        fun create(@BindsInstance context: Context): AndroidInjector<WallApplication>
+    @Component.Builder
+    interface Builder {
+
+        fun withContext(@BindsInstance context: Context): Builder
+        fun build(): AppComponent
 
     }
+
+    fun inject(activity: HomeActivity)
+    fun inject(activity: SplashActivity)
+    fun inject(fragment: PhotosFragment)
+    fun inject(fragment: PhotoDetailFragment)
+    fun inject(fragment: FavoriteFragment)
+    fun inject(service: PhotoDownloadService)
 
 }
