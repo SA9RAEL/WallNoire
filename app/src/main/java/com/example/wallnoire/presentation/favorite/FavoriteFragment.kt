@@ -1,7 +1,9 @@
 package com.example.wallnoire.presentation.favorite
 
+import android.os.Bundle
 import androidx.navigation.fragment.findNavController
 import com.example.wallnoire.R
+import com.example.wallnoire.base.extention.fragmentComponent
 import com.example.wallnoire.databinding.FragmentFavoriteBinding
 import com.example.wallnoire.base.extention.observeNonNull
 import com.example.wallnoire.base.view.BaseFragment
@@ -15,6 +17,11 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel
 
     override fun init() {
         binding.recyclerView.adapter = adapter
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        this.fragmentComponent().inject(this)
+        super.onCreate(savedInstanceState)
     }
 
     override fun setupClickListeners() {

@@ -12,6 +12,7 @@ import androidx.annotation.LayoutRes
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.wallnoire.R
 import com.example.wallnoire.base.extention.orFalse
@@ -19,10 +20,9 @@ import com.example.wallnoire.base.extention.runContextNotNull
 import com.example.wallnoire.data.enum.SnackBarType
 import com.example.wallnoire.base.viewmodel.BaseViewModel
 import com.google.android.material.snackbar.Snackbar
-import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
-abstract class BaseFragment<DB : ViewDataBinding, VM : BaseViewModel> : DaggerFragment() {
+abstract class BaseFragment<DB : ViewDataBinding, VM : BaseViewModel> : Fragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 

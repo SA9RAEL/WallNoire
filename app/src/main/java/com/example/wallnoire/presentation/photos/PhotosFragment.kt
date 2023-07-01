@@ -1,8 +1,10 @@
 package com.example.wallnoire.presentation.photos
 
+import android.os.Bundle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.wallnoire.R
+import com.example.wallnoire.base.extention.fragmentComponent
 import com.example.wallnoire.databinding.FragmentPhotosBinding
 import com.example.wallnoire.base.extention.observeNonNull
 import com.example.wallnoire.base.view.BaseFragment
@@ -20,6 +22,11 @@ class PhotosFragment : BaseFragment<FragmentPhotosBinding, PhotosViewModel>(),
     override fun init() {
         setupRecyclerView()
         setupCategoryView()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        this.fragmentComponent().inject(this)
+        super.onCreate(savedInstanceState)
     }
 
     override fun setUpViewModelStateObservers() {

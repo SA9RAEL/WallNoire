@@ -1,6 +1,8 @@
 package com.example.wallnoire.presentation.detail
 
+import android.annotation.SuppressLint
 import android.app.WallpaperManager
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
@@ -9,6 +11,8 @@ import androidx.navigation.fragment.findNavController
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.list.listItems
 import com.example.wallnoire.R
+import com.example.wallnoire.WallApplication
+import com.example.wallnoire.base.extention.fragmentComponent
 import com.example.wallnoire.databinding.FragmentPhotoDetailBinding
 import com.example.wallnoire.base.extention.observeNonNull
 import com.example.wallnoire.base.extention.orFalse
@@ -28,6 +32,11 @@ class PhotoDetailFragment : BaseFragment<FragmentPhotoDetailBinding, PhotoDetail
         get() = PhotoDetailViewModel::class.java
 
     private val wallpaperManager by lazy { WallpaperManager.getInstance(requireContext()) }
+
+    override fun onAttach(context: Context) {
+        this.fragmentComponent().inject(this)
+        super.onAttach(context)
+    }
 
     override fun setUpViewModelStateObservers() {
         viewModel.viewState.observeNonNull(viewLifecycleOwner) { viewState ->
@@ -68,6 +77,7 @@ class PhotoDetailFragment : BaseFragment<FragmentPhotoDetailBinding, PhotoDetail
         else viewModel.addFavorite()
     }
 
+    @SuppressLint("CheckResult")
     private fun startDownloadService() {
         if (PermissionManager.checkPermission(
                 requireContext(),
