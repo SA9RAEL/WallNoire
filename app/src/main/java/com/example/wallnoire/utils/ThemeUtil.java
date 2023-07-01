@@ -7,6 +7,7 @@ import android.util.TypedValue;
 
 import org.jetbrains.annotations.NonNls;
 
+// Переписать на kotlin
 @NonNls
 public class ThemeUtil {
 
