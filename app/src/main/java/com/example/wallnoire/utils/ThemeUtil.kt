@@ -1,91 +1,102 @@
-package com.example.wallnoire.utils;
+package com.example.wallnoire.utils
 
-import android.content.Context;
-import android.text.TextUtils;
-import android.util.DisplayMetrics;
-import android.util.TypedValue;
+import android.R
+import android.content.Context
+import android.text.TextUtils
+import android.util.TypedValue
+import org.jetbrains.annotations.NonNls
+import java.util.Locale
 
-import org.jetbrains.annotations.NonNls;
-
-// Переписать на kotlin
 @NonNls
-public class ThemeUtil {
-
-    public static int pxToDp(Context context, int pixel) {
-        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-        return pixel < 0 ? pixel : Math.round(pixel / displayMetrics.density);
+object ThemeUtil {
+    fun pxToDp(context: Context, pixel: Int): Int {
+        val displayMetrics = context.resources.displayMetrics
+        return if (pixel < 0) pixel else Math.round(pixel / displayMetrics.density)
     }
 
-    public static int dpToPx(Context context, int dp) {
-        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-        return dp < 0 ? dp : Math.round(dp * displayMetrics.density);
+    fun dpToPx(context: Context, dp: Int): Int {
+        val displayMetrics = context.resources.displayMetrics
+        return if (dp < 0) dp else Math.round(dp * displayMetrics.density)
     }
 
-    public static int dpToPx(Context context, float dp) {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources().getDisplayMetrics());
+    fun dpToPx(context: Context, dp: Float): Int {
+        return TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            dp,
+            context.resources.displayMetrics
+        ).toInt()
     }
 
-    public static int pxToSp(Context context, int pixel) {
-        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-        return pixel < 0 ? pixel : Math.round(pixel / displayMetrics.scaledDensity);
+    fun pxToSp(context: Context, pixel: Int): Int {
+        val displayMetrics = context.resources.displayMetrics
+        return if (pixel < 0) pixel else Math.round(pixel / displayMetrics.scaledDensity)
     }
 
-    public static int spToPx(Context context, int sp) {
-        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, displayMetrics);
+    fun spToPx(context: Context, sp: Int): Int {
+        val displayMetrics = context.resources.displayMetrics
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp.toFloat(), displayMetrics)
+            .toInt()
     }
 
-    public static int getStatusBarHeight(Context context) {
-        int result = 0;
-        int resourceId = getAndroidIdentifier(context, "dimen", "status_bar_height");
+    fun getStatusBarHeight(context: Context): Int {
+        var result = 0
+        val resourceId = getAndroidIdentifier(context, "dimen", "status_bar_height")
         if (resourceId > 0) {
-            result = context.getResources().getDimensionPixelSize(resourceId);
+            result = context.resources.getDimensionPixelSize(resourceId)
         }
         //Logger.v("statusBar height: " + result);
-        return result;
+        return result
     }
 
-    public static int getNavigationBarHeight(Context context) {
-        int result = 0;
-        int resourceId = getAndroidIdentifier(context, "dimen", "navigation_bar_height");
+    fun getNavigationBarHeight(context: Context): Int {
+        var result = 0
+        val resourceId = getAndroidIdentifier(context, "dimen", "navigation_bar_height")
         if (resourceId > 0) {
-            result = context.getResources().getDimensionPixelSize(resourceId);
+            result = context.resources.getDimensionPixelSize(resourceId)
         }
-
-        return result;
+        return result
     }
 
-    public static int getActionBarHeight(Context context) {
-        TypedValue typedValue = new TypedValue();
-        int actionBarHeight = 0;
-        if (context.getTheme().resolveAttribute(android.R.attr.actionBarSize, typedValue, true)) {
-            DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-            float actionBar = TypedValue.complexToDimension(typedValue.data, displayMetrics);
-            actionBarHeight = Math.round(actionBar);
+    fun getActionBarHeight(context: Context): Int {
+        val typedValue = TypedValue()
+        var actionBarHeight = 0
+        if (context.theme.resolveAttribute(R.attr.actionBarSize, typedValue, true)) {
+            val displayMetrics = context.resources.displayMetrics
+            val actionBar = TypedValue.complexToDimension(typedValue.data, displayMetrics)
+            actionBarHeight = Math.round(actionBar)
         }
-
-        return actionBarHeight;
+        return actionBarHeight
     }
 
-    public static int getDimenIdentifier(Context context, String name) {
-        return getIdentifier(context, "dimen", name);
+    fun getDimenIdentifier(context: Context, name: String): Int {
+        return getIdentifier(context, "dimen", name)
     }
 
-    public static int getStringIdentifier(Context context, String name) {
-        return getIdentifier(context, "string", name);
+    fun getStringIdentifier(context: Context, name: String): Int {
+        return getIdentifier(context, "string", name)
     }
 
-    public static int getIdentifier(Context context, @NonNls String defType, String name) {
-        if (TextUtils.isEmpty(name)) {
-            return 0;
-        }
-        return context.getResources().getIdentifier(name.toLowerCase(), defType, context.getPackageName());
+    fun getIdentifier(context: Context, @NonNls defType: String?, name: String): Int {
+        return if (TextUtils.isEmpty(name)) {
+            0
+        } else context.resources.getIdentifier(
+            name.lowercase(Locale.getDefault()),
+            defType,
+            context.packageName
+        )
     }
 
-    public static int getAndroidIdentifier(Context context, @NonNls String defType, @NonNls String name) {
-        if (TextUtils.isEmpty(name)) {
-            return 0;
-        }
-        return context.getResources().getIdentifier(name.toLowerCase(), defType, "android");
+    fun getAndroidIdentifier(
+        context: Context,
+        @NonNls defType: String?,
+        @NonNls name: String
+    ): Int {
+        return if (TextUtils.isEmpty(name)) {
+            0
+        } else context.resources.getIdentifier(
+            name.lowercase(Locale.getDefault()),
+            defType,
+            "android"
+        )
     }
 }
