@@ -39,6 +39,7 @@ android {
 
     buildFeatures {
         viewBinding = true
+        // убрать databinding и все логику с ним связанную
         dataBinding = true
     }
 
